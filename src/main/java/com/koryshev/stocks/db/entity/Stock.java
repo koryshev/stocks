@@ -1,8 +1,13 @@
 package com.koryshev.stocks.db.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -12,10 +17,15 @@ import java.time.Instant;
  * @author Ivan Koryshev
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
 public class Stock extends AbstractPersistable<Integer> {
 
     private String name;
     private BigDecimal currentPrice;
+    @CreatedDate
+    private Instant createdDate;
+    @LastModifiedDate
     private Instant lastUpdate;
 
     public String getName() {
@@ -32,6 +42,14 @@ public class Stock extends AbstractPersistable<Integer> {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Instant getLastUpdate() {
