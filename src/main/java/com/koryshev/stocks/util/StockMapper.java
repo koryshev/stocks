@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface StockMapper {
 
-    StockDto toStockDto(Stock stocks);
+    StockDto toStockDto(Stock stock);
 
     List<StockDto> toStockDto(List<Stock> stocks);
 

@@ -57,6 +57,29 @@ public class StockServiceTest {
     }
 
     @Test
+    public void getsOneStock() {
+        // Arrange
+        Stock testStock = testUtil.createStock();
+
+        when(stockRepository.findById(any())).thenReturn(Optional.of(testStock));
+
+        // Act
+        Stock stock = stockService.findOne(1);
+
+        // Assert
+        assertThat(stock).isEqualTo(testStock);
+    }
+
+    @Test(expected = StockNotFoundException.class)
+    public void failsToGetNotExistingStock() {
+        // Arrange
+        when(stockRepository.findById(any())).thenReturn(Optional.empty());
+
+        // Act
+        stockService.findOne(1);
+    }
+
+    @Test
     public void createsOneStock() {
         // Arrange
         Stock testStock = testUtil.createStock();

@@ -7,14 +7,13 @@ import com.koryshev.stocks.dto.StockCreateDto;
 import com.koryshev.stocks.dto.StockUpdateDto;
 import com.koryshev.stocks.service.StockService;
 import com.koryshev.stocks.util.TestUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class StockControllerIntegrationTest {
 
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
@@ -53,6 +51,11 @@ public class StockControllerIntegrationTest {
     @Autowired
     private StockRepository stockRepository;
 
+    @Before
+    public void clearDb() {
+        stockRepository.deleteAll();
+    }
+
     @Test
     public void getsAllStocks() throws Exception {
         // Arrange
@@ -66,6 +69,29 @@ public class StockControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void getsOneStock() throws Exception {
+        // Arrange
+        Stock testStock = testUtil.createStock();
+        testStock = stockRepository.save(testStock);
+
+        // Act / Assert
+        mvc.perform(get("/api/stocks/" + testStock.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(testStock.getName())));
+    }
+
+    @Test
+    public void failsToGetNotExistingStock() throws Exception {
+        // Arrange -- no-op
+
+        // Act / Assert
+        mvc.perform(get("/api/stocks/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test

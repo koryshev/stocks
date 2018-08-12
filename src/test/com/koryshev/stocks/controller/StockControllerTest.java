@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -69,6 +70,31 @@ public class StockControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void getsOneStock() throws Exception {
+        // Arrange
+        Stock testStock = testUtil.createStock();
+
+        when(stockService.findOne(any())).thenReturn(testStock);
+
+        // Act / Assert
+        mvc.perform(get("/api/stocks/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(testStock.getName())));
+    }
+
+    @Test
+    public void failsToGetNotExistingStock() throws Exception {
+        // Arrange
+        when(stockService.findOne(any())).thenThrow(StockNotFoundException.class);
+
+        // Act / Assert
+        mvc.perform(get("/api/stocks/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test

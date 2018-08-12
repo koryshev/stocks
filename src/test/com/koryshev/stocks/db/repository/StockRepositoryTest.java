@@ -52,12 +52,25 @@ public class StockRepositoryTest {
     }
 
     @Test
+    public void getsOneStock() {
+        // Arrange
+        Stock testStock = testUtil.createStock();
+        testStock = stockRepository.save(testStock);
+
+        // Act
+        Stock stock = stockRepository.getOne(testStock.getId());
+
+        // Assert
+        assertThat(stock).isEqualTo(testStock);
+    }
+
+    @Test
     public void createsOneStock() {
         // Arrange
         Stock testStock = testUtil.createStock();
 
         // Act
-        stockRepository.save(testStock);
+        testStock = stockRepository.save(testStock);
         Optional<Stock> stock = stockRepository.findById(testStock.getId());
 
         // Assert

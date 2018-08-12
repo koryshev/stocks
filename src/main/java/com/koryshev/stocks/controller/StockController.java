@@ -42,6 +42,18 @@ public class StockController {
     }
 
     /**
+     * Returns a stock with the specified ID.
+     *
+     * @param stockId the stock ID to return
+     * @return the stock
+     */
+    @GetMapping("/{stockId}")
+    public StockDto get(@PathVariable Integer stockId) {
+        Stock stock = stockService.findOne(stockId);
+        return stockMapper.toStockDto(stock);
+    }
+
+    /**
      * Creates a new stock from data specified in a DTO.
      *
      * @param dto the DTO containing stock details
