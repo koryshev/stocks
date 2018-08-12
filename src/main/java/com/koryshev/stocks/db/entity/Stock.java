@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import java.math.BigDecimal;
@@ -21,10 +22,15 @@ import java.time.Instant;
 @DynamicUpdate
 public class Stock extends AbstractPersistable<Integer> {
 
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false)
     private BigDecimal currentPrice;
+
     @CreatedDate
     private Instant createdDate;
+
     @LastModifiedDate
     private Instant lastUpdate;
 

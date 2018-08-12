@@ -5,7 +5,9 @@ import com.koryshev.stocks.db.repository.StockRepository;
 import com.koryshev.stocks.dto.StockCreateDto;
 import com.koryshev.stocks.dto.StockUpdateDto;
 import com.koryshev.stocks.exception.StockNotFoundException;
+import com.koryshev.stocks.exception.StockValidationException;
 import com.koryshev.stocks.util.StockMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,7 +46,11 @@ public class StockService {
      */
     public Stock create(StockCreateDto dto) {
         Stock stock = stockMapper.fromStockCreateDto(dto);
-        return stockRepository.save(stock);
+        try {
+            return stockRepository.save(stock);
+        } catch (DataIntegrityViolationException e) {
+            throw new StockValidationException("Stock name must be unique", e);
+        }
     }
 
     /**

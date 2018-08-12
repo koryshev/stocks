@@ -90,6 +90,34 @@ public class StockControllerTest {
     }
 
     @Test
+    public void failsToCreateStockWithEmptyName() throws Exception {
+        // Arrange
+        StockCreateDto dto = new StockCreateDto();
+        dto.setName("");
+        dto.setCurrentPrice(new BigDecimal(TestUtil.RANDOM_INT.get()));
+
+        // Act / Assert
+        mvc.perform(post("/api/stocks")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JSON_MAPPER.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void failsToCreateStockWithNegativePrice() throws Exception {
+        // Arrange
+        StockCreateDto dto = new StockCreateDto();
+        dto.setName("stock");
+        dto.setCurrentPrice(new BigDecimal(TestUtil.RANDOM_INT.get()).negate());
+
+        // Act / Assert
+        mvc.perform(post("/api/stocks")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JSON_MAPPER.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void updatesStock() throws Exception {
         // Arrange
         Stock testStock = testUtil.createStock();
@@ -121,5 +149,18 @@ public class StockControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSON_MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void failsToUpdateStockWithNegativePrice() throws Exception {
+        // Arrange
+        StockUpdateDto dto = new StockUpdateDto();
+        dto.setCurrentPrice(new BigDecimal(TestUtil.RANDOM_INT.get()).negate());
+
+        // Act / Assert
+        mvc.perform(put("/api/stocks/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JSON_MAPPER.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest());
     }
 }

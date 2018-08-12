@@ -9,6 +9,7 @@ import com.koryshev.stocks.util.StockMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class StockController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StockDto create(@RequestBody StockCreateDto dto) {
+    public StockDto create(@RequestBody @Valid StockCreateDto dto) {
         Stock stock = stockService.create(dto);
         return stockMapper.toStockDto(stock);
     }
@@ -62,7 +63,7 @@ public class StockController {
      */
     @PutMapping("/{stockId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer stockId, @RequestBody StockUpdateDto dto) {
+    public void update(@PathVariable Integer stockId, @RequestBody @Valid StockUpdateDto dto) {
         stockService.update(stockId, dto);
     }
 }

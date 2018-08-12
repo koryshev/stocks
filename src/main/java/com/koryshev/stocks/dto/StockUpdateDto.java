@@ -1,5 +1,7 @@
 package com.koryshev.stocks.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -9,6 +11,8 @@ import java.math.BigDecimal;
  */
 public class StockUpdateDto {
 
+    @NotNull
+    @Min(value = 0)
     private BigDecimal currentPrice;
 
     public BigDecimal getCurrentPrice() {

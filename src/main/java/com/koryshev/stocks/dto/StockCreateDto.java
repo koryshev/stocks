@@ -1,5 +1,8 @@
 package com.koryshev.stocks.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 /**
@@ -9,7 +12,11 @@ import java.math.BigDecimal;
  */
 public class StockCreateDto {
 
+    @NotNull
+    @Size(min = 1, max = 255)
     private String name;
+    @NotNull
+    @Min(value = 0)
     private BigDecimal currentPrice;
 
     public String getName() {
