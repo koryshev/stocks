@@ -9,16 +9,7 @@ import java.math.BigDecimal;
  */
 public class StockUpdateDto {
 
-    private Integer id;
     private BigDecimal currentPrice;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public BigDecimal getCurrentPrice() {
         return currentPrice;

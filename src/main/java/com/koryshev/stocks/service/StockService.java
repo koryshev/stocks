@@ -50,12 +50,13 @@ public class StockService {
     /**
      * Updates a stock with data specified in a DTO.
      *
-     * @param dto the DTO containing data to update
+     * @param stockId the stock ID to update
+     * @param dto     the DTO containing data to update
      * @return the updated stock
      * @throws StockNotFoundException if such stock doesn't exist
      */
-    public Stock update(StockUpdateDto dto) {
-        Stock stock = stockRepository.findById(dto.getId())
+    public Stock update(Integer stockId, StockUpdateDto dto) {
+        Stock stock = stockRepository.findById(stockId)
                 .orElseThrow(() -> new StockNotFoundException("Stock not found"));
         stock.setCurrentPrice(dto.getCurrentPrice());
         return stockRepository.save(stock);

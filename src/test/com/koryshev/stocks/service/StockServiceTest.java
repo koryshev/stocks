@@ -90,7 +90,7 @@ public class StockServiceTest {
         when(stockRepository.save(testStock)).thenReturn(updatedStock);
 
         // Act
-        Stock stock = stockService.update(dto);
+        Stock stock = stockService.update(1, dto);
 
         // Assert
         assertThat(stock.getCurrentPrice()).isEqualTo(updatedPrice);
@@ -102,10 +102,9 @@ public class StockServiceTest {
         when(stockRepository.findById(any())).thenReturn(Optional.empty());
 
         StockUpdateDto dto = new StockUpdateDto();
-        dto.setId(1);
         dto.setCurrentPrice(new BigDecimal(TestUtil.RANDOM_INT.get()));
 
         // Act
-        stockService.update(dto);
+        stockService.update(1, dto);
     }
 }
