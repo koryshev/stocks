@@ -42,7 +42,7 @@ public class StockRepositoryTest {
         List<Stock> testStocks = new ArrayList<>();
         testStocks.add(testUtil.createStock());
         testStocks.add(testUtil.createStock());
-        stockRepository.saveAll(testStocks);
+        testStocks = stockRepository.saveAll(testStocks);
 
         // Act
         List<Stock> stocks = stockRepository.findAll();
