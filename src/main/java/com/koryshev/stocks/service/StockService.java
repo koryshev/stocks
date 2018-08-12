@@ -9,6 +9,7 @@ import com.koryshev.stocks.exception.StockValidationException;
 import com.koryshev.stocks.util.StockMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StockService {
 
     @NonNull
@@ -35,7 +37,10 @@ public class StockService {
      * @return the stock list
      */
     public List<Stock> findAll() {
-        return stockRepository.findAll();
+        log.info("Getting all stock entries");
+        List<Stock> stocks = stockRepository.findAll();
+        log.info("Returning {} entries", stocks.size());
+        return stocks;
     }
 
     /**
@@ -43,12 +48,17 @@ public class StockService {
      *
      * @param dto the DTO containing stock details
      * @return the created stock
+     * @throws StockValidationException if the specified stock name is already in use
      */
     public Stock create(StockCreateDto dto) {
+        log.info("Creating a stock, name = {}, price = {}", dto.getName(), dto.getCurrentPrice());
         Stock stock = stockMapper.fromStockCreateDto(dto);
         try {
-            return stockRepository.save(stock);
+            stock = stockRepository.save(stock);
+            log.info("Created a stock, ID = {}", stock.getId());
+            return stock;
         } catch (DataIntegrityViolationException e) {
+            log.warn("Attempted to create a stock with the name = {}, which is already in use", dto.getName());
             throw new StockValidationException("Stock name must be unique", e);
         }
     }
@@ -62,9 +72,16 @@ public class StockService {
      * @throws StockNotFoundException if such stock doesn't exist
      */
     public Stock update(Integer stockId, StockUpdateDto dto) {
+        log.info("Updating a stock, ID = {}, updated price = {}", stockId, dto.getCurrentPrice());
         Stock stock = stockRepository.findById(stockId)
-                .orElseThrow(() -> new StockNotFoundException("Stock not found"));
+                .orElseThrow(() -> {
+                    log.warn("Attempted to update a stock with the ID = {}, which was not found", stockId);
+                    return new StockNotFoundException("Stock not found");
+                });
+
         stock.setCurrentPrice(dto.getCurrentPrice());
-        return stockRepository.save(stock);
+        stock = stockRepository.save(stock);
+        log.info("Updated a stock, ID = {}", stock.getId());
+        return stock;
     }
 }
