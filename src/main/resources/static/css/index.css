@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+.page-content {
+    padding: 40px;
+}
+
+.mdl-data-table {
+    width: 100%;
+}
+
+.mdl-card__actions {
+    text-align: center;
+}
+
+.add-button {
+    margin-bottom: 20px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    z-index: 98;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #000;
+}
+
+.dialog {
+    display: none;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 300px;
+    margin: 0 0 0 -150px;
+    z-index: 99;
+}

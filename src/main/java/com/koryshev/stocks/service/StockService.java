@@ -76,7 +76,7 @@ public class StockService {
             log.info("Created a stock, ID = {}", stock.getId());
             return stock;
         } catch (DataIntegrityViolationException e) {
-            log.warn("Attempted to create a stock with the name = {}, which is already in use", dto.getName(), e);
+            log.warn("Attempted to create a stock with the name = {}, which is already in use", dto.getName());
             throw new StockValidationException("Stock name must be unique");
         }
     }

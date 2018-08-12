@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stocks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/lib/material.min.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <script src="js/lib/material.min.js"></script>
+    <script src="js/lib/jquery-3.3.1.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Stocks</span>
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    </header>
+
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent add-button">
+                ADD
+            </button>
+
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Name</th>
+                    <th>Current Price</th>
+                    <th class="mdl-data-table__cell--non-numeric">Created Date</th>
+                    <th class="mdl-data-table__cell--non-numeric">Last Update</th>
+                    <th class="mdl-data-table__cell--non-numeric">Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <!-- Dialogs -->
+
+            <div class="overlay"></div>
+
+            <div class="dialog add-dialog mdl-card mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">Add Stock</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form id="add-form" action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="add-name"/>
+                            <label class="mdl-textfield__label" for="add-name">Name</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="number" step="any" min="0" id="add-price"/>
+                            <label class="mdl-textfield__label" for="add-price">Current Price</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent add-button-submit">
+                        ADD
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent add-button-cancel">
+                        CANCEL
+                    </button>
+                </div>
+            </div>
+
+            <div class="dialog update-dialog mdl-card mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">Update Stock</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form id="update-form" action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="update-name" readonly/>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="number" step="any" min="0" id="update-price"/>
+                            <label class="mdl-textfield__label" for="update-price">Current Price</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent update-button-submit">
+                        UPDATE
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent update-button-cancel">
+                        CANCEL
+                    </button>
+                </div>
+            </div>
+
+            <!-- Popup message -->
+
+            <div class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
