@@ -6,12 +6,13 @@ import com.koryshev.stocks.dto.StockDto;
 import com.koryshev.stocks.dto.StockUpdateDto;
 import com.koryshev.stocks.service.StockService;
 import com.koryshev.stocks.util.StockMapper;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Provides an API for stocks.
@@ -20,16 +21,14 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/api/stocks")
+@RequiredArgsConstructor
 public class StockController {
 
+    @NonNull
     private final StockService stockService;
 
+    @NonNull
     private final StockMapper stockMapper;
-
-    public StockController(StockService stockService, StockMapper stockMapper) {
-        this.stockService = Objects.requireNonNull(stockService, "stockService");
-        this.stockMapper = Objects.requireNonNull(stockMapper, "stockMapper");
-    }
 
     /**
      * Returns a list of all stocks.

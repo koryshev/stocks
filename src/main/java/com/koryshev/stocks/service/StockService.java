@@ -7,11 +7,12 @@ import com.koryshev.stocks.dto.StockUpdateDto;
 import com.koryshev.stocks.exception.StockNotFoundException;
 import com.koryshev.stocks.exception.StockValidationException;
 import com.koryshev.stocks.util.StockMapper;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Manages {@link Stock} entries.
@@ -19,15 +20,14 @@ import java.util.Objects;
  * @author Ivan Koryshev
  */
 @Service
+@RequiredArgsConstructor
 public class StockService {
 
+    @NonNull
     private final StockMapper stockMapper;
-    private final StockRepository stockRepository;
 
-    public StockService(StockMapper stockMapper, StockRepository stockRepository) {
-        this.stockMapper = Objects.requireNonNull(stockMapper, "stockMapper");
-        this.stockRepository = Objects.requireNonNull(stockRepository, "stockRepository");
-    }
+    @NonNull
+    private final StockRepository stockRepository;
 
     /**
      * Returns a list of all stocks.
