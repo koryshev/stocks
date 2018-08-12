@@ -67,6 +67,12 @@
             <version>${swagger.version}</version>
         </dependency>
 
+        <!-- Required for running on Java 9+ (see https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9-and-above) -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
