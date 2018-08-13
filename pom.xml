@@ -8,6 +8,7 @@
     <artifactId>stocks</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Stocks</name>
+    <description>Java REST Web service with Spring Boot</description>
 
     <properties>
         <start-class>com.koryshev.stocks.StocksApplication</start-class>
